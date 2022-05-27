@@ -14,7 +14,8 @@ export interface RequestWithAuth extends Request {
 // TODO: 
 // check if ALL of this is still valid after changes
 export async function isLoggedIn(req: RequestWithAuth, res: Response, next: NextFunction) {
-    const token = req.headers['authorization'];
+    // const token = req.headers['authorization'];
+    const token = req.cookies.authcookie;
     if (!token) {
         res.redirect("/login");
         return;
@@ -23,11 +24,12 @@ export async function isLoggedIn(req: RequestWithAuth, res: Response, next: Next
     const jwtSecret = process.env.JWT_SECRET;
     // TODO: redirect to error page
     if (!jwtSecret) return Promise.reject(new CustomError(500, "No JWT Secret has been set."));
-    const data : VerifiedUserPayload = jwt.verify(token.split(' ')[1], jwtSecret) as VerifiedUserPayload;
+    const data : VerifiedUserPayload = jwt.verify(token, jwtSecret) as VerifiedUserPayload;
     const user = await User.findByPk(data.id);
-    if (user && !user.token?.includes(token.split(' ')[1])) {
+    if (user && user.token != token) {
         // TODO: redirect to login with message
-        return Promise.reject(new CustomError(405, 'Session has expired, login again.'))
+        res.redirect("/login");
+        return;
     }
 
     if (user) {

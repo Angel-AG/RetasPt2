@@ -25,7 +25,7 @@ export default class User extends Model {
     async generateToken() {
         const jwtSecret = process.env.JWT_SECRET;
         if (jwtSecret) {
-            const token = jwt.sign({ id: this.id.toString() }, jwtSecret, { expiresIn: '1 day' });
+            const token = jwt.sign({ id: this.id.toString() }, jwtSecret, { expiresIn: "10h" });
             this.token = token
             await this.save();
             return Promise.resolve(token);

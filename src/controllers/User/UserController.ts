@@ -17,7 +17,8 @@ class UserController {
             const hashedPassword = await User.hashPassword(password)
             const user = await User.create({username, email, password: hashedPassword, name, phoneNumber}); 
             const token = await user.generateToken();
-            res.setHeader("authorization", token);
+            // res.setHeader("authorization", token);
+            res.cookie('authcookie', token);
             res.status(201).json({
                 success: true, 
                 message: 'User created successfully',
@@ -34,7 +35,8 @@ class UserController {
             const matches = await user.comparePassword(password);
             if (!matches) return Promise.reject(new CustomError(401, "El nombre de usuario y/o contraseña es incorrecto, por favor intente nuevamente.")) // change to Custom Error
             const token = await user.generateToken();
-            res.setHeader("authorization", token);
+            // res.setHeader("authorization", token);
+            res.cookie('authcookie', token);
             res.status(201).json({
                 success: true,
                 message: 'Login successful',
