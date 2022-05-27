@@ -33,7 +33,6 @@ async function loginSubmit(e) {
     const response = await axios.post('/user/login', inputs);
     console.log(response);
     sessionStorage.setItem("user", response.data.user);
-    sessionStorage.setItem("token", response.headers.authorization);
     location.assign('/');
   } catch (error) {
     console.error(error);
