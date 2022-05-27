@@ -1,6 +1,5 @@
 async function loginSubmit(e) {
   e.preventDefault();
-
   const inputs = {
     username: e.target.usuario.value,
     password: e.target.password.value,
@@ -30,18 +29,11 @@ async function loginSubmit(e) {
   }
 
   try {
+    // eslint-disable-next-line no-undef
     const response = await axios.post('/user/login', inputs);
-    // console.log(response);
-
-    // const loc = location as typeof location & {
-    //   state: {from: string}
-    // }
-
-    // if (loc.state && loc.state.from) {
-    //   navigate(loc.state.from);
-    //   return;
-    // }
-
+    console.log(response);
+    sessionStorage.setItem("user", response.data.user);
+    sessionStorage.setItem("token", response.headers.authorization);
     location.assign('/');
   } catch (error) {
     console.error(error);
