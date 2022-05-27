@@ -83,18 +83,10 @@ async function registerSubmit(e) {
   }
 
   try {
+    // eslint-disable-next-line no-undef
     const response = await axios.post('/user/register', inputs);
-    // console.log(response);
-
-    // const loc = location as typeof location & {
-    //   state: {from: string}
-    // }
-
-    // if (loc.state && loc.state.from) {
-    //   navigate(loc.state.from);
-    //   return;
-    // }
-
+    sessionStorage.setItem("user", response.data.user);
+    sessionStorage.setItem("token", response.headers.authorization);
     location.assign('/');
   } catch (error) {
     console.error(error);
