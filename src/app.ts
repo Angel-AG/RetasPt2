@@ -8,7 +8,7 @@ import sendAsJson from './middleware/sendAsJson';
 import errorHandler from './middleware/errorHandler';
 import path from 'path';
 import { sequelize } from './services/dbConfig';
-import { isLoggedIn } from './middleware/checkAuth';
+import { isLoggedIn, getUser, RequestWithAuth } from './middleware/checkAuth';
 
 const app = express();
 const PORT = 8080 || process.env.PORT;
@@ -23,17 +23,25 @@ app.set("view engine", "ejs");
 (async () => await sequelize.sync())();
 
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', getUser, (req: RequestWithAuth, res: Response) => {
     // here we should render the home view
-    res.render("hello_world");
+    res.render("hello_world", {user: req.user});
 });
 
-app.get('/login', (req: Request, res: Response) => {
-    res.render("login")
+app.get('/login', getUser, (req: RequestWithAuth, res: Response) => {
+    if (req.user) {
+        res.redirect("/");
+    }
+
+    res.render("login", {user: req.user});
 });
 
-app.get('/register', (req: Request, res: Response) => {
-    res.render("register")
+app.get('/register', getUser, (req: RequestWithAuth, res: Response) => {
+    if (req.user) {
+        res.redirect("/");
+    }
+
+    res.render("register", {user: req.user});
 });
 
 // User routes 
@@ -42,8 +50,8 @@ app.use('/user', UserRoutes)
 app.use('/retas', RetasRoutes)
 
 // view routes
-app.get('/create_reta', isLoggedIn, (req: Request, res: Response) => {
-    res.render('protected_view');
+app.get('/create_reta', isLoggedIn, (req: RequestWithAuth, res: Response) => {
+    res.render('protected_view', {user: req.user});
 });
 
 // error handling middleware
