@@ -40,3 +40,21 @@ export async function isLoggedIn(req: RequestWithAuth, res: Response, next: Next
         return;
     }
 }
+
+export async function getUser(req: RequestWithAuth, res: Response, next: NextFunction) {
+    const token = req.cookies.authcookie;
+    if (!token) {
+        next();
+        return;
+    }
+
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) return Promise.reject(new CustomError(500, "No JWT Secret has been set."));
+    const data : VerifiedUserPayload = jwt.verify(token, jwtSecret) as VerifiedUserPayload;
+    const user = await User.findByPk(data.id);
+    if (user && user.token == token) {
+        req.user = user;
+    }
+
+    next();
+}
