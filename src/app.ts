@@ -25,7 +25,7 @@ app.set("view engine", "ejs");
 
 app.get('/', (req: Request, res: Response) => {
     // here we should render the home view
-    res.render("hello_world");
+    res.render("home");
 });
 
 app.get('/login', (req: Request, res: Response) => {
