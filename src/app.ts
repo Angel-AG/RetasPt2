@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
-import express, { Request, Response, json } from 'express';
+import express, { Response, json } from 'express';
 import cookieParser from 'cookie-parser';
 import UserRoutes from './controllers/User';
 import RetasRoutes from './controllers/Retas';
