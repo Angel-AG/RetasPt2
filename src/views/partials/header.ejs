@@ -19,6 +19,7 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Retas</title>
   </head>
   <body>
@@ -56,23 +57,27 @@
               Crea una reta
             </a>
             <!-- TODO: Change based on user state -->
-            <a 
+            <% if (!user) { %>
+              <a 
               href="/login"
               class="btn btn-dark rounded-pill fw-bold px-lg-5 px-3">
               Iniciar sesión
             </a>
+            <% } %>
           </div>
           <!-- TODO: Change based on user state -->
+          <% if (user) { %>
           <ul class="navbar-nav align-items-start align-items-md-center">
             <li class="nav-item">
               <a 
                 href="/user_profile"
                 class="btn d-flex align-items-center">
                 <i class="fa-solid fa-2xl fa-circle-user"></i>
-                <span class="d-inline d-md-none ms-2">Usuario</span>
+                <span class="d-inline d-md-none ms-2">Mi perfil</span>
               </a>
             </li>
           </ul>
+          <% } %>
         </div>
       </div>
     </nav>
