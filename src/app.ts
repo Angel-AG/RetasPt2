@@ -11,7 +11,7 @@ import { sequelize } from './services/dbConfig';
 import { isLoggedIn, getUser, RequestWithAuth } from './middleware/checkAuth';
 
 const app = express();
-const PORT = 8080 || process.env.PORT;
+const PORT = 8081 || process.env.PORT;
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: false}));
@@ -44,15 +44,18 @@ app.get('/register', getUser, (req: RequestWithAuth, res: Response) => {
     res.render("register", {user: req.user});
 });
 
+app.get('/create_reta', isLoggedIn, (req: RequestWithAuth, res: Response) => {
+    res.render("new_reta", {user: req.user});
+});
+
+app.get('/reta_detail', isLoggedIn, (req: RequestWithAuth, res: Response) => {
+    res.render("reta-detail", {user: req.user})
+});
+
 // User routes 
 app.use('/user', UserRoutes)
 // Retas routes
 app.use('/retas', RetasRoutes)
-
-// view routes
-app.get('/create_reta', isLoggedIn, (req: RequestWithAuth, res: Response) => {
-    res.render('protected_view', {user: req.user});
-});
 
 // error handling middleware
 app.use(errorHandler());
