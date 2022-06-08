@@ -1,14 +1,14 @@
 #slider{
-    height: 500px;
-    border: 1px solid black;
+    height: 200px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
 .container{
-    width: 1600px;
-    margin: auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
 }
 
 .subcontainer{

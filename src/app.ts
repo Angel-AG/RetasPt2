@@ -24,8 +24,18 @@ app.set("view engine", "ejs");
 
 
 app.get('/', getUser, (req: RequestWithAuth, res: Response) => {
-    // here we should render the home view
-    res.render("hello_world", {user: req.user});
+    let categories = [
+        { name: 'Todas', imgSrc: 'portero_retas.jpg' },
+        { name: 'Futbol', imgSrc: './futbol_cat.jpg' },
+        { name: 'Baloncesto', imgSrc: './basket_cat.jpg' },
+        { name: 'Voleibol', imgSrc: './voley_cat.jpg' },
+        { name: 'Golf', imgSrc: './golf_cat.jpg' },
+        { name: 'Raquetbol', imgSrc: './raquet_cat.jpg' },
+        { name: 'eSports', imgSrc: './esport_cat.jpg' },
+        { name: 'Ajedrez', imgSrc: './chess_cat.jpg' },
+        { name: 'Otras', imgSrc: './other_cat.jpg' }
+      ];
+    res.render("home", {user: req.user, categories});
 });
 
 app.get('/login', getUser, (req: RequestWithAuth, res: Response) => {
