@@ -35,11 +35,8 @@ class RetaController {
         }
     }
 
-    public readAll() {
-        return async (req: Request, res: Response) => {
-            const allRetas = await Reta.findAll({where: {is_active: true, is_private: false}, order: [['date', 'ASC']], include: [User]});
-            res.status(200).json({allRetas});
-        }
+    public async readAll() {
+        return await Reta.findAll({where: {is_active: true, is_private: false}, order: [['date', 'ASC']], include: [User]});
     }
 
     public delete() {

@@ -1,5 +1,5 @@
 #slider{
-    height: 200px;
+    height: 32.5vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -64,10 +64,31 @@
     border-radius: 50%;
     outline: none;
     transition: 0.7s;
-    border: 3px solid white;
-    background-color: rgba(0,0,0,0.5);
+    border: 1px solid black;
 }
 
 .previous:hover, .next:hover{
-    border: 3px solid gray;
+    border: 1px solid gray;
+}
+
+@media only screen and (min-width: 1024px) {
+    #previous-cat {
+        position: absolute;
+        bottom: 24rem;
+        z-index: 1;
+    }
+    
+    #next-cat {
+        position: absolute;
+        right: 5%;
+        z-index: 1;
+        bottom: 24rem;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .controller {
+        display: flex;
+        left: 0;
+        justify-content: space-around;
+    }
 }

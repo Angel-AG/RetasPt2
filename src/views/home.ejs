@@ -18,8 +18,8 @@
                             <!-- <h2>Categorías</h2> -->
                             <div class="controller">
                                 <div id="controls">
-                                    <button class="btn btn-primary previous"><</button>
-                                    <button class="btn btn-primary next">></button>
+                                    <button id="previous-cat" class="btn-lg btn-circle btn-primary previous"><</button>
+                                    <button id="next-cat" class="btn-lg btn-circle btn-primary next">></button>
                                 </div>
                             </div>
                         </div>                            
@@ -49,91 +49,32 @@
         <h2>Todas las retas</h2>
       </div>
       <div class="card-group py-lg-5">
-            <div class="row row-col-3 me-md-2 pt-3">
-                <div class="card text-white mb-4 col-4">
-                    <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
-                    <div class="card-img-overlay d-flex flex-column align-items-start">
-                        <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
-                    </div>
-                    <div class="card-footer bg-light text-dark">
-                        <div class="row mb-2">
-                            <div class="col">
-                                <p>gameloc</p>
-                            </div>
+            <div class="row pt-3">
+                <% retas.forEach(function(reta) { %>
+                <div class="col-12 col-md-4 me-md-2 pt-4">
+                    <div class="card text-white mb-4">
+                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                        <div class="card-img-overlay d-flex flex-column align-items-start">
+                            <h5 class="card-title bg-dark rounded-pill py-2 px-4"><%=reta.title %></h5>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <p>gametime</p>
+                        <div class="card-footer bg-light text-dark">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p> <%= reta.location %> </p>
+                                </div>
                             </div>
-                            <div class="col">
-                                <p>gamedate</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card text-white mb-4 col-4">
-                    <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
-                    <div class="card-img-overlay d-flex flex-column align-items-start">
-                        <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
-                    </div>
-                    <div class="card-footer bg-light text-dark">
-                        <div class="row mb-2">
-                            <div class="col">
-                                <p>gameloc</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p>gametime</p>
-                            </div>
-                            <div class="col">
-                                <p>gamedate</p>
+                            <div class="row">
+                                <div class="col">
+                                    <p> <%= reta.time %> </p>
+                                </div>
+                                <div class="col">
+                                    <p> <%= reta.date%></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card text-white mb-4 col-4">
-                    <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
-                    <div class="card-img-overlay d-flex flex-column align-items-start">
-                        <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
-                    </div>
-                    <div class="card-footer bg-light text-dark">
-                        <div class="row mb-2">
-                            <div class="col">
-                                <p>gameloc</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p>gametime</p>
-                            </div>
-                            <div class="col">
-                                <p>gamedate</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card text-white mb-4 col-4">
-                    <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36.2vh; object-fit: cover; overflow: auto; "/>
-                    <div class="card-img-overlay d-flex flex-column align-items-start">
-                        <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
-                    </div>
-                    <div class="card-footer bg-light text-dark">
-                        <div class="row mb-2">
-                            <div class="col">
-                                <p>gameloc</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p>gametime</p>
-                            </div>
-                            <div class="col">
-                                <p>gamedate</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <% }) %>
             </div>
        </div>
     </div>

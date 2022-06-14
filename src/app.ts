@@ -9,6 +9,8 @@ import errorHandler from './middleware/errorHandler';
 import path from 'path';
 import { sequelize } from './services/dbConfig';
 import { isLoggedIn, getUser, RequestWithAuth } from './middleware/checkAuth';
+import RetaController from './controllers/Retas/RetaController';
+import { formatTime, getMonth, getWeekday } from './utils/dateTransforms';
 
 const app = express();
 const PORT = 8081 || process.env.PORT;
@@ -23,7 +25,7 @@ app.set("view engine", "ejs");
 (async () => await sequelize.sync())();
 
 
-app.get('/', getUser, (req: RequestWithAuth, res: Response) => {
+app.get('/', getUser, async (req: RequestWithAuth, res: Response) => {
     const categories = [
         { name: 'Todas', imgSrc: '/images/portero_retas.jpg' },
         { name: 'Futbol', imgSrc: '/images/futbol_cat.jpg' },
@@ -34,8 +36,17 @@ app.get('/', getUser, (req: RequestWithAuth, res: Response) => {
         { name: 'eSports', imgSrc: '/images/esport_cat.jpg' },
         { name: 'Ajedrez', imgSrc: '/images/chess_cat.jpg' },
         { name: 'Otras', imgSrc: '/images/other_cat.jpg' }
-      ];
-    res.render("home", {user: req.user, categories});
+    ];
+    const allRetas = await RetaController.readAll();
+    const retas = allRetas.map(reta => {
+        return {
+            title: reta.name, 
+            location: reta.location, 
+            time: formatTime(reta.hours, reta.minutes),
+            date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`
+        }
+    })
+    res.render("home", {user: req.user, categories, retas});
 });
 
 app.get('/login', getUser, (req: RequestWithAuth, res: Response) => {

@@ -9,19 +9,19 @@ let slider = tns({
     responsive: {
         1600: {
             items: 6, 
-            gutter: 20
+            gutter: 25
         },
         1024: {
             items: 4, 
-            gutter: 20
+            gutter: 25
         },
         768: {
             items: 2, 
-            gutter: 20
+            gutter: 25
         }, 
         480: {
             items: 1,
-            gutter: 20
+            gutter: 25
         }
     }
 
