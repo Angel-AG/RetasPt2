@@ -30,7 +30,7 @@
                         <div>
                             <div class="slide">
                                 <div class="card" style="height: 9rem; width: 16rem;">
-                                    <img class="card-img" src="/images/portero_retas.jpg" alt="Category img" style="height: 100%; object-fit: cover;">
+                                    <img class="card-img" src=<%=categories[i].imgSrc%> >  alt="Category img" style="height: 100%; object-fit: cover;">
                                     <div class="card-img-overlay">
                                         <div class="d-flex flex-column align-items-center justify-content-center" style="height: 100%;">
                                             <button class="btn btn-dark rounded-pill fw-bold py-auto px-4 py-2" type="button"><%= categories[i].name%></button>
@@ -141,5 +141,6 @@
 
 <link rel="stylesheet" href="/css/slider.css">
 <script src="/js/slider.js"></script>
+<script src="/js/home.js"></script>
 
 <%- include("partials/footer") %>

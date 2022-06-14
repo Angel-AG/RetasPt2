@@ -1,0 +1,1 @@
+document.getElementById("edit-reta-button").onclick = () => location.href('/edit_reta')

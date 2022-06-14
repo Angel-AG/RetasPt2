@@ -24,16 +24,16 @@ app.set("view engine", "ejs");
 
 
 app.get('/', getUser, (req: RequestWithAuth, res: Response) => {
-    let categories = [
-        { name: 'Todas', imgSrc: 'portero_retas.jpg' },
-        { name: 'Futbol', imgSrc: './futbol_cat.jpg' },
-        { name: 'Baloncesto', imgSrc: './basket_cat.jpg' },
-        { name: 'Voleibol', imgSrc: './voley_cat.jpg' },
-        { name: 'Golf', imgSrc: './golf_cat.jpg' },
-        { name: 'Raquetbol', imgSrc: './raquet_cat.jpg' },
-        { name: 'eSports', imgSrc: './esport_cat.jpg' },
-        { name: 'Ajedrez', imgSrc: './chess_cat.jpg' },
-        { name: 'Otras', imgSrc: './other_cat.jpg' }
+    const categories = [
+        { name: 'Todas', imgSrc: '/images/portero_retas.jpg' },
+        { name: 'Futbol', imgSrc: '/images/futbol_cat.jpg' },
+        { name: 'Baloncesto', imgSrc: '/images/basket_cat.jpg' },
+        { name: 'Voleibol', imgSrc: '/images/voley_cat.jpg' },
+        { name: 'Golf', imgSrc: '/images/golf_cat.jpg' },
+        { name: 'Raquetbol', imgSrc: '/images/raquet_cat.jpg' },
+        { name: 'eSports', imgSrc: '/images/esport_cat.jpg' },
+        { name: 'Ajedrez', imgSrc: '/images/chess_cat.jpg' },
+        { name: 'Otras', imgSrc: '/images/other_cat.jpg' }
       ];
     res.render("home", {user: req.user, categories});
 });
