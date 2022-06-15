@@ -148,8 +148,8 @@ nuevaReta = {
 
     try {
       const response = await axios.post('/retas/', nuevaReta);
-      console.log(response);
-      window.location.assign('/reta_detail');
+      numReta = response.data.newReta.id;
+      window.location.assign('/retas/' + numReta);
       // other sucess mesage
     } catch (error) {
         console.error(error);
