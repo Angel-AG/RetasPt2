@@ -27,7 +27,7 @@ class RetaController {
         }
     }
 
-    public readOne() {
+    public readOne(editing: boolean) {
         return async (req: RequestWithAuth, res: Response) => {
             const retaId : string = req.params.retaId;
             let reta = await Reta.findByPk(retaId);
@@ -36,14 +36,17 @@ class RetaController {
             // res.status(200).json({reta});
             reta = reta.get({plain: true});
             admin = admin?.get({plain: true});
-            res.render("reta_detail", 
-            {
+            console.log(req.user)
+            console.log(req.user?.id == admin?.id)
+            const data = {
                 reta, 
                 date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`,
                 time: formatTime(reta.hours, reta.minutes),
                 admin,
-                user: req.user
-            });
+                isCurrentUserAdmin: req.user?.id == admin?.id,
+                isUserLoggedIn: req.user !== undefined
+            }
+            editing ? res.render("edit_reta", {user:req.user, data}) : res.render("reta_detail", {user: req.user, data});
         }
     }
 
