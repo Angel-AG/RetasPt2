@@ -5,6 +5,7 @@ import CustomError from "../../middleware/customError";
 import { RequestWithAuth } from "../../middleware/checkAuth";
 import ConfirmedRetas from "../../models/ConfirmedRetas";
 import {Op} from "sequelize";
+import { formatTime, getMonth, getWeekday } from "../../utils/dateTransforms";
 
 class RetaController {
     public create() {
@@ -26,20 +27,46 @@ class RetaController {
         }
     }
 
-    public readOne() {
-        return async (req: Request, res: Response) => {
+    public readOne(editing: boolean) {
+        return async (req: RequestWithAuth, res: Response) => {
             const retaId : string = req.params.retaId;
-            const reta = await Reta.findByPk(retaId)
+            if (editing) {
+                console.log("editing reta " + retaId);
+            }
+            let reta = await Reta.findByPk(retaId);
             if (!reta) return Promise.reject( new CustomError(404, "¡Esta reta no existe!"));
-            res.status(200).json({reta});
+            let admin = await User.findByPk(reta.adminId);
+            const confirmedParticipants = (await ConfirmedRetas.findAndCountAll({where: {retaId}})).count;
+            const isCurrentUserAdmin = req.user?.id == admin?.id;
+            let isCurrentUserConfirmed : boolean;
+            if (req.user) {
+                isCurrentUserConfirmed = (await ConfirmedRetas.findAndCountAll({where: {userId: req.user?.id, retaId}})).count > 0;
+                console.log('is current user confirmed? ' + isCurrentUserConfirmed);
+            } else {
+                isCurrentUserConfirmed = false;
+            }
+            // res.status(200).json({reta});
+            reta = reta.get({plain: true});
+            admin = admin?.get({plain: true});
+            console.log(req.user)
+            console.log(req.user?.id == admin?.id)
+            console.log(confirmedParticipants)
+            const data = {
+                reta, 
+                date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`,
+                time: formatTime(reta.hours, reta.minutes),
+                admin,
+                isCurrentUserAdmin,
+                isUserLoggedIn: req.user !== undefined,
+                confirmedParticipants,
+                isCurrentUserConfirmed
+            }
+            editing ? res.render("edit_reta", {user:req.user, data}) : res.render("reta_detail", {user: req.user, data});
         }
     }
 
-    public readAll() {
-        return async (req: Request, res: Response) => {
-            const allRetas = await Reta.findAll({where: {is_active: true, is_private: false}, order: [['date', 'ASC']], include: [User]});
-            res.status(200).json({allRetas});
-        }
+    public async readAll() {
+        return await Reta.findAll({where: {is_active: true, is_private: false}, order: [['date', 'ASC']], include: [User]});
     }
 
     public delete() {

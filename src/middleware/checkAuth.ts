@@ -57,7 +57,7 @@ export async function getUser(req: RequestWithAuth, res: Response, next: NextFun
     if (!jwtSecret) return Promise.reject(new CustomError(500, "No JWT Secret has been set."));
     try {
         const data : VerifiedUserPayload = jwt.verify(token, jwtSecret) as VerifiedUserPayload;
-        const user = await User.findByPk(data.id);
+        const user = (await User.findByPk(data.id))?.get({plain: true});
         if (user && user.token == token) {
             req.user = user;
         }

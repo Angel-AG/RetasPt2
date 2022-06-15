@@ -9,6 +9,8 @@ import errorHandler from './middleware/errorHandler';
 import path from 'path';
 import { sequelize } from './services/dbConfig';
 import { isLoggedIn, getUser, RequestWithAuth } from './middleware/checkAuth';
+import RetaController from './controllers/Retas/RetaController';
+import { formatTime, getMonth, getWeekday } from './utils/dateTransforms';
 
 const app = express();
 const PORT = 8081 || process.env.PORT;
@@ -23,9 +25,29 @@ app.set("view engine", "ejs");
 (async () => await sequelize.sync())();
 
 
-app.get('/', getUser, (req: RequestWithAuth, res: Response) => {
-    // here we should render the home view
-    res.render("hello_world", {user: req.user});
+app.get('/', getUser, async (req: RequestWithAuth, res: Response) => {
+    const categories = [
+        { name: 'Todas', imgSrc: '/images/portero_retas.jpg' },
+        { name: 'Futbol', imgSrc: '/images/futbol_cat.jpg' },
+        { name: 'Baloncesto', imgSrc: '/images/basket_cat.jpg' },
+        { name: 'Voleibol', imgSrc: '/images/voley_cat.jpg' },
+        { name: 'Golf', imgSrc: '/images/golf_cat.jpg' },
+        { name: 'Raquetbol', imgSrc: '/images/raquet_cat.jpg' },
+        { name: 'eSports', imgSrc: '/images/esport_cat.jpg' },
+        { name: 'Ajedrez', imgSrc: '/images/chess_cat.jpg' },
+        { name: 'Otras', imgSrc: '/images/other_cat.jpg' }
+    ];
+    const allRetas = await RetaController.readAll();
+    const retas = allRetas.map(reta => {
+        return {
+            id: reta.id,
+            title: reta.name, 
+            location: reta.location, 
+            time: formatTime(reta.hours, reta.minutes),
+            date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`
+        }
+    })
+    res.render("home", {user: req.user, categories, retas});
 });
 
 app.get('/login', getUser, (req: RequestWithAuth, res: Response) => {

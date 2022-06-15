@@ -16,7 +16,7 @@
       </div>
       <div class="d-md-block col-12 col-lg-6 mt-3">
         <div style="border-bottom: 0.1rem solid" class="d-flex justify-content-between">
-          <h2>Mi reta</h2>
+          <h2><%= data.reta.name %> <span id="reta-id" style="display: none;"><%= data.reta.id %></span></h2>
           <button style="border-radius: 200;" class="btn btn-info mb-1" type="button">
           <span style="font-weight:600; font-size: large;">Compartir reta </span> <i class="fa fa-share fa-large"></i>
           </button>
@@ -26,18 +26,18 @@
             <div class="row">
               <div>
                 <i class="fa fa-location-dot"></i>
-                MI CASA
+                <%= data.reta.location %>
               </div>
             </div>
             <div class="d-flex justify-content-between py-2">
               <div>
                 <FontAwesomeIcon icon="faClock" />
                 <i class="fa fa-clock"></i>
-                10:30
+                <%= data.time %>
               </div>
               <div>
                 <i class="fa fa-calendar"></i>
-                23/02/2022
+                <%= data.date %>
               </div>
             </div>
           </li>
@@ -48,7 +48,7 @@
                               <img class="img-fluid align-content-right rounded-circle" alt='Admin Avatar' src="reta.admin.avatarImgSrc" style="height: 5vh;"/>
                           </div> */} -->
               <div>
-                <h6 style= "text-align: left; font-weight: 700;">JUAN</h6>
+                <h6 style= "text-align: left; font-weight: 700;"> <%= data.admin.name %> </h6>
                 <p style="text-align: left; font-weight: 200; margin-top: -7.5px;">ADMINISTRADOR</p>
               </div>
             </div>
@@ -60,16 +60,31 @@
                               <div>Costo: <strong>{reta.price}</strong></div>
                           </div> */} -->
               <div class='mt-2'>
-                <div>Cupo: <strong>1/6</strong></div>
+                <div>Cupo: <strong><%= data.confirmedParticipants %>/<%= data.reta.max_participants %></strong></div>
               </div>
+              <% if (data.isCurrentUserAdmin) {%>
               <div>
-                <button class="btn-dark rounded-pill fw-bold" type="button">Editar Reta</button>
+                <button id="edit-reta-button" class="btn-dark rounded-pill fw-bold" type="button">Editar Reta</button>
               </div>
+              <% } %>
               <div>
                 <!-- {/* TODO: Write function to determine if the user viewing the event is admin or not to change text to "Invitar amigos" */} -->
                 <!-- <button class="btn-danger text-light rounded-pill fw-bold" type="button">Eliminar reta</button> -->
-                <button class="btn-dark rounded-pill fw-bold" type="button">Confirmar asistencia<!-- Cancelar asistencia --></button>
-                <!-- <button class="btn-primary rounded-pill fw-bold" type="button">Ir a inicio de sesión para unirme</button> -->
+                <% if (data.isCurrentUserAdmin) { %>
+                    <button id="delete-reta-btn" class="btn-danger rounded-pill fw-bold" type="button">Eliminar reta</button>
+                <% } else { %>
+                  <% if (data.isUserLoggedIn) { %>
+                    <button id="toggle-attendance-btn" class="btn-dark rounded-pill fw-bold" type="button">
+                      <% if (data.isCurrentUserConfirmed) { %>
+                        Cancelar asistencia
+                      <% } else { %> 
+                        Confirmar asistencia
+                      <% } %>
+                    </button>
+                  <% } else { %>
+                    <button id="to-login-btn" class="btn-dark rounded-pill fw-bold" type="button">Iniciar sesión para participar</button>
+                  <% } %>
+                <% } %>
               </div>
             </div>
           </li>
@@ -77,4 +92,5 @@
       </div>
     </div>
 
+<script src="/js/retaDetail.js"></script>
 <%- include("partials/footer") %>
