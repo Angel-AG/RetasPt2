@@ -11,7 +11,7 @@ class RetaController {
     public create() {
         return async (req: RequestWithAuth, res: Response) => {
             if (!req.user) return Promise.reject(new CustomError(403, "Permisos insuficientes"));
-            const retaRequest : Reta = req.body.reta;
+            const retaRequest : Reta = req.body;
             const creatorId = req.user.id;
             const creatorUser = await User.findByPk(creatorId);
             if (!creatorUser) return Promise.reject( new CustomError(404, "¡El usuario no existe en la base de datos!"));
