@@ -1,7 +1,6 @@
+const retaId = document.getElementById('reta-id').innerHTML;
 async function toggleAttendance(e) {
     e.preventDefault();
-    const retaId = document.getElementById('reta-id').innerHTML;
-
     try {
         // eslint-disable-next-line no-undef
         const response = await axios.post('/user/toggle_attendance', {
@@ -27,10 +26,10 @@ function init() {
     const toggleAttendanceBtn = document.getElementById("toggle-attendance-btn");
     const deleteRetaBtn = document.getElementById("delete-reta-btn");
     if (deleteRetaBtn && editRetaBtn) {
-        editRetaBtn.addEventListener('click', () => window.location.replace('/retas/edit_reta'));
+        editRetaBtn.addEventListener('click', () => location.assign('/retas/edit_reta/' + retaId));
         deleteRetaBtn.addEventListener('click', () => deleteReta());
     } else if (toLoginBtn) {
-        toLoginBtn.addEventListener('click', () => window.location.replace('/login')); 
+        toLoginBtn.addEventListener('click', () => location.assign('/login')); 
     } else {
         toggleAttendanceBtn.addEventListener('click', toggleAttendance);
     }

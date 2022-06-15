@@ -30,6 +30,9 @@ class RetaController {
     public readOne(editing: boolean) {
         return async (req: RequestWithAuth, res: Response) => {
             const retaId : string = req.params.retaId;
+            if (editing) {
+                console.log("editing reta " + retaId);
+            }
             let reta = await Reta.findByPk(retaId);
             if (!reta) return Promise.reject( new CustomError(404, "¡Esta reta no existe!"));
             let admin = await User.findByPk(reta.adminId);

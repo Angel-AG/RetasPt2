@@ -11,6 +11,6 @@ router.put('/', asyncHandler(isLoggedIn), asyncHandler(RetaController.update()))
 router.get('/get_all_by_category/:category', asyncHandler(RetaController.getRetasByCategory()));
 router.get('/get_by_query', asyncHandler(RetaController.getRetasBySearchBarQuery()))
 router.get('/:retaId', getUser, asyncHandler(RetaController.readOne(false)));
-router.get('/retas/edit_reta', getUser, asyncHandler(RetaController.readOne(true)));
+router.get('/edit_reta/:retaId', asyncHandler(isLoggedIn), asyncHandler(RetaController.readOne(true)));
 
 export default router;
