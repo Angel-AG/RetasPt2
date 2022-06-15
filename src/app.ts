@@ -40,6 +40,7 @@ app.get('/', getUser, async (req: RequestWithAuth, res: Response) => {
     const allRetas = await RetaController.readAll();
     const retas = allRetas.map(reta => {
         return {
+            id: reta.id,
             title: reta.name, 
             location: reta.location, 
             time: formatTime(reta.hours, reta.minutes),

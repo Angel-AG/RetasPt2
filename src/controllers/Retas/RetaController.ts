@@ -5,6 +5,7 @@ import CustomError from "../../middleware/customError";
 import { RequestWithAuth } from "../../middleware/checkAuth";
 import ConfirmedRetas from "../../models/ConfirmedRetas";
 import {Op} from "sequelize";
+import { formatTime, getMonth, getWeekday } from "../../utils/dateTransforms";
 
 class RetaController {
     public create() {
@@ -27,11 +28,22 @@ class RetaController {
     }
 
     public readOne() {
-        return async (req: Request, res: Response) => {
+        return async (req: RequestWithAuth, res: Response) => {
             const retaId : string = req.params.retaId;
-            const reta = await Reta.findByPk(retaId)
+            let reta = await Reta.findByPk(retaId);
             if (!reta) return Promise.reject( new CustomError(404, "¡Esta reta no existe!"));
-            res.status(200).json({reta});
+            let admin = await User.findByPk(reta.adminId);
+            // res.status(200).json({reta});
+            reta = reta.get({plain: true});
+            admin = admin?.get({plain: true});
+            res.render("reta_detail", 
+            {
+                reta, 
+                date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`,
+                time: formatTime(reta.hours, reta.minutes),
+                admin,
+                user: req.user
+            });
         }
     }
 
