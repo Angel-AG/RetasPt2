@@ -40,7 +40,7 @@ class RetaController {
             const isCurrentUserAdmin = req.user?.id == admin?.id;
             let isCurrentUserConfirmed : boolean;
             if (req.user) {
-                isCurrentUserConfirmed = (await ConfirmedRetas.findAndCountAll({where: {userId: req.user?.id}})).count > 0;
+                isCurrentUserConfirmed = (await ConfirmedRetas.findAndCountAll({where: {userId: req.user?.id, retaId}})).count > 0;
                 console.log('is current user confirmed? ' + isCurrentUserConfirmed);
             } else {
                 isCurrentUserConfirmed = false;

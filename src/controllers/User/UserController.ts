@@ -85,9 +85,13 @@ class UserController {
             } else if (user.id == reta.adminId) {
                 return Promise.reject("Event admin may not opt out!")
             } else {
-                const confirmedUser = await ConfirmedRetas.findOne({where: {userId: user.id}});
+                const confirmedUser = await ConfirmedRetas.findOne({where: {userId: user.id, retaId}});
+                console.log('is user confirmed?' + confirmedUser);
+                console.log('user id: ' + user.id);
+                console.log('reta id ', retaId);
                 if (confirmedUser) {
-                    await ConfirmedRetas.destroy({where: {userId: user.id, retaId}});
+                    const destroyedRows = await ConfirmedRetas.destroy({where: {userId: user.id, retaId}});
+                    console.log('destroyed ' + destroyedRows + ' rows');
                     res.status(201).json({msg: 'Confirmación eliminada exitosamente', createdConfirmation: false});
                 } else {
                     const newConfirmation = await ConfirmedRetas.create({userId: user.id, retaId});

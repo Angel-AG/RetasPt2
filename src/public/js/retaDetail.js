@@ -3,15 +3,13 @@ async function toggleAttendance(e) {
     e.preventDefault();
     try {
         // eslint-disable-next-line no-undef
-        const response = await axios.post('/user/toggle_attendance', {
+        await axios.put('/user/toggle_attendance', {
             retaId
         });
-        console.log(response);
+        // alert(JSON.stringify(response));
         window.location.reload();        
       } catch (error) {
         console.error(error);
-        document.getElementById('passwordFeedback').textContent =
-          error.response.data.message;
         // alert(error.msg);
       }
 }
