@@ -36,18 +36,30 @@ class RetaController {
             let reta = await Reta.findByPk(retaId);
             if (!reta) return Promise.reject( new CustomError(404, "¡Esta reta no existe!"));
             let admin = await User.findByPk(reta.adminId);
+            const confirmedParticipants = (await ConfirmedRetas.findAndCountAll({where: {retaId}})).count;
+            const isCurrentUserAdmin = req.user?.id == admin?.id;
+            let isCurrentUserConfirmed : boolean;
+            if (req.user) {
+                isCurrentUserConfirmed = (await ConfirmedRetas.findAndCountAll({where: {userId: req.user?.id}})).count > 0;
+                console.log('is current user confirmed? ' + isCurrentUserConfirmed);
+            } else {
+                isCurrentUserConfirmed = false;
+            }
             // res.status(200).json({reta});
             reta = reta.get({plain: true});
             admin = admin?.get({plain: true});
             console.log(req.user)
             console.log(req.user?.id == admin?.id)
+            console.log(confirmedParticipants)
             const data = {
                 reta, 
                 date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`,
                 time: formatTime(reta.hours, reta.minutes),
                 admin,
-                isCurrentUserAdmin: req.user?.id == admin?.id,
-                isUserLoggedIn: req.user !== undefined
+                isCurrentUserAdmin,
+                isUserLoggedIn: req.user !== undefined,
+                confirmedParticipants,
+                isCurrentUserConfirmed
             }
             editing ? res.render("edit_reta", {user:req.user, data}) : res.render("reta_detail", {user: req.user, data});
         }

@@ -60,7 +60,7 @@
                               <div>Costo: <strong>{reta.price}</strong></div>
                           </div> */} -->
               <div class='mt-2'>
-                <div>Cupo: <strong>1/6</strong></div>
+                <div>Cupo: <strong><%= data.confirmedParticipants %>/<%= data.reta.max_participants %></strong></div>
               </div>
               <% if (data.isCurrentUserAdmin) {%>
               <div>
@@ -74,7 +74,13 @@
                     <button id="delete-reta-btn" class="btn-danger rounded-pill fw-bold" type="button">Eliminar reta</button>
                 <% } else { %>
                   <% if (data.isUserLoggedIn) { %>
-                    <button id="toggle-attendance-btn" class="btn-dark rounded-pill fw-bold" type="button">Confirmar asistencia</button>
+                    <button id="toggle-attendance-btn" class="btn-dark rounded-pill fw-bold" type="button">
+                      <% if (data.isCurrentUserConfirmed) { %>
+                        Cancelar asistencia
+                      <% } else { %> 
+                        Confirmar asistencia
+                      <% } %>
+                    </button>
                   <% } else { %>
                     <button id="to-login-btn" class="btn-dark rounded-pill fw-bold" type="button">Iniciar sesión para participar</button>
                   <% } %>
