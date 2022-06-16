@@ -43,7 +43,8 @@ app.get('/', getUser, async (req: RequestWithAuth, res: Response) => {
         return {
             id: reta.id,
             title: reta.name, 
-            location: reta.location, 
+            location: reta.location,
+            category: reta.category,
             time: formatTime(reta.hours, reta.minutes),
             date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`
         }

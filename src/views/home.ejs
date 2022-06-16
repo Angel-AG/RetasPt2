@@ -52,22 +52,30 @@
             <div class="row row-col-3 me-md-2 pt-3">
                 <% retas.forEach(function(reta) { %>
                     <div class="card text-white mb-4 col-4">
-                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                        <% for (var i = 0; i < categories.length; i++)  {   %>
+                            <% if (reta.category == categories[i].name) {%>
+                                <img id="retaImg" src="<%= categories[i].imgSrc %>" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                            <%  } %>
+                        <%  } %>
                         <div class="card-img-overlay d-flex flex-column align-items-start">
                             <h5 class="card-title bg-dark rounded-pill py-2 px-4"><a href="/retas/<%= reta.id %>"> <%= reta.title %> </a></h5>
                         </div>
                         <div class="card-footer bg-light text-dark">
                             <div class="row mb-2">
                                 <div class="col">
-                                    <p> <%= reta.location %> </p>
+                                    <i class="fa fa-location-dot"></i>
+                                    <%= reta.location %>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <p> <%= reta.time %> </p>
+                                    <FontAwesomeIcon icon="faClock" />
+                                    <i class="fa fa-clock"></i>
+                                    <%= reta.time %>
                                 </div>
                                 <div class="col">
-                                    <p> <%= reta.date%></p>
+                                    <i class="fa fa-calendar"></i>
+                                    <%= reta.date%>
                                 </div>
                             </div>
                         </div>
