@@ -58,8 +58,7 @@
 }
 
 .previous, .next{
-    padding: 2px;
-    width: 30px;
+    text-align: center;
     cursor: pointer;
     border-radius: 50%;
     outline: none;
