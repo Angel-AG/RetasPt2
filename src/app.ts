@@ -53,12 +53,24 @@ app.get('/', getUser, async (req: RequestWithAuth, res: Response) => {
 });
 
 app.get('/user_profile', getUser, async (req: RequestWithAuth, res: Response) => {
+    const categories = [
+        { name: 'Todas', imgSrc: '/images/portero_retas.jpg' },
+        { name: 'Futbol', imgSrc: '/images/futbol_cat.jpg' },
+        { name: 'Baloncesto', imgSrc: '/images/basket_cat.jpg' },
+        { name: 'Voleibol', imgSrc: '/images/voley_cat.jpg' },
+        { name: 'Golf', imgSrc: '/images/golf_cat.jpg' },
+        { name: 'Raquetbol', imgSrc: '/images/raquet_cat.jpg' },
+        { name: 'eSports', imgSrc: '/images/esport_cat.jpg' },
+        { name: 'Ajedrez', imgSrc: '/images/chess_cat.jpg' },
+        { name: 'Otras', imgSrc: '/images/other_cat.jpg' }
+    ];
     const retasAsAdminForUser = await UserController.getAllRetasForUserAsAdmin(req.user?.id)
     const retasAsAdmin = retasAsAdminForUser.map(reta => {
         return {
             id: reta.id,
             title: reta.name, 
-            location: reta.location, 
+            location: reta.location,
+            category: reta.category,
             time: formatTime(reta.hours, reta.minutes),
             date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`
         }
@@ -69,12 +81,13 @@ app.get('/user_profile', getUser, async (req: RequestWithAuth, res: Response) =>
             id: reta.id,
             title: reta.name, 
             location: reta?.location, 
+            category: reta.category,
             time: formatTime(reta?.hours, reta?.minutes),
             date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`
         } : undefined
     })
 
-    res.render("user_profile", {user: req.user, retasAsAdmin, retasAsParticipant});
+    res.render("user_profile", {user: req.user, retasAsAdmin, retasAsParticipant, categories});
 });
 
 app.get('/edit_user_profile', getUser, (req: RequestWithAuth, res: Response) => {
