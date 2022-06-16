@@ -11,6 +11,7 @@ import { sequelize } from './services/dbConfig';
 import { isLoggedIn, getUser, RequestWithAuth } from './middleware/checkAuth';
 import RetaController from './controllers/Retas/RetaController';
 import { formatTime, getMonth, getWeekday } from './utils/dateTransforms';
+import UserController from './controllers/User/UserController';
 
 const app = express();
 const PORT = 8081 || process.env.PORT;
@@ -50,9 +51,29 @@ app.get('/', getUser, async (req: RequestWithAuth, res: Response) => {
     res.render("home", {user: req.user, categories, retas});
 });
 
-app.get('/user_profile', getUser, (req: RequestWithAuth, res: Response) => {
-    // here we should render the home view
-    res.render("user_profile", {user: req.user});
+app.get('/user_profile', getUser, async (req: RequestWithAuth, res: Response) => {
+    const retasAsAdminForUser = await UserController.getAllRetasForUserAsAdmin(req.user?.id)
+    const retasAsAdmin = retasAsAdminForUser.map(reta => {
+        return {
+            id: reta.id,
+            title: reta.name, 
+            location: reta.location, 
+            time: formatTime(reta.hours, reta.minutes),
+            date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`
+        }
+    });
+    const retasAsParticipantForUser = await UserController.getAllRetasForUserAsParticipant(req.user?.id);
+    const retasAsParticipant = retasAsParticipantForUser?.map(reta => {
+        return reta ? {
+            id: reta.id,
+            title: reta.name, 
+            location: reta?.location, 
+            time: formatTime(reta?.hours, reta?.minutes),
+            date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`
+        } : undefined
+    })
+
+    res.render("user_profile", {user: req.user, retasAsAdmin, retasAsParticipant});
 });
 
 app.get('/edit_user_profile', getUser, (req: RequestWithAuth, res: Response) => {
