@@ -1,0 +1,121 @@
+<%- include("partials/header", {user: user}) %>
+  <div id="bad-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lo sentimos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Ocurrió un error inesperado al actualizar tu perfil. Por favor, inténtalo más tarde.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Intentar de nuevo</button>
+          <a href="/" class="btn btn-dark" data-bs-dismiss="modal">Volver a inicio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="good-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">¡Listo!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Sus datos fueron actualizados con éxito.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Realizar cambios de nuevo</button>
+          <a href="/" class="btn btn-dark">Volver a inicio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+ <div class='bg-dark full-page-with-nav'>
+  <form class="container mt-5 pt-2" id="edit-user-form" novalidate>
+    <div class="text-hint mb-1 small"><p><span class="text-danger">*</span> = campo requerido</p></div>
+    <div class="row">
+      <div class="form-floating col-md-6 mb-4">
+        <input 
+          type="text" class="form-control rounded-pill" id="nombre" name="nombre"
+          placeholder="Nombre" maxlength="40" required value="<%= user.name %>"/>
+        <label for="nombre" class="form-label ps-4">
+          Nombre<span class="req">*</span>
+        </label>
+        <div id="nombreFeedback" class="px-3 pt-2 text-danger">
+        </div>
+      </div>
+      <div class="form-floating col-md-6 mb-4">
+        <input 
+          type="text" class="form-control rounded-pill" id="usuario" name="usuario"
+          placeholder="Usuario" maxlength="40" required value="<%= user.username %>"/>
+        <label for="usuario" class="form-label ps-4">
+          Usuario<span class="req">*</span>
+        </label>
+        <div id="usuarioFeedback" class="px-3 pt-2 text-danger">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-floating col-md-6 mb-4">
+        <input 
+          type="email" class="form-control rounded-pill" id="email" name="email"
+          placeholder="Correo electrónico" required value="<%= user.email %>"/>
+        <label for="email" class="form-label ps-4">
+          Correo electrónico<span class="req">*</span>
+        </label>
+        <div id="correoFeedback" class="px-3 pt-2 text-danger">
+        </div>
+      </div>
+      <div class="form-floating col-md-6 mb-4">
+        <input 
+          type="tel" class="form-control rounded-pill" id="phoneNumber" name="phoneNumber"
+          placeholder="Número de teléfono a 10 dígitos" maxlength="10" required value="<%= user.phoneNumber %>"/>
+        <label for="phoneNumber" class="form-label ps-4">
+          Teléfono<span class="req">*</span>
+        </label>
+        <div id="phoneFeedback" class="px-3 pt-2 text-danger">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-floating col-md-6 mb-4">
+        <input 
+          type="password" class="form-control rounded-pill" id="password" name="password"
+          placeholder="Contraseña" maxlength="40" required />
+        <label for="password" class="form-label ps-4">
+          Contraseña<span class="req">*</span>
+        </label>
+        <div id="passwordFeedback" class="px-3 pt-2 text-danger">
+          Al menos 8 caracteres con: 1 mayúscula, 1 minúscula y 1 número.
+        </div>
+      </div>
+      <div class="form-floating col-md-6 mb-4">
+        <input 
+          type="password" class="form-control rounded-pill" id="passwordCheck" name="passwordCheck"
+          placeholder="Contraseña de nuevo" maxlength="40" required/>
+        <label for="passwordCheck" class="form-label ps-4">
+          Confirmar contraseña<span class="req">*</span>
+        </label>
+        <div id="passwordCheckFeedback" class="px-3 pt-2 text-danger">
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <a href="/user_profile" class="btn btn-warning rounded-pill fw-bold w-100 py-3 px-5">Cancelar</a>
+      </div>
+      <div class="col-6">
+        <button type="submit" class="btn btn-primary rounded-pill fw-bold w-100 py-3 px-5">Guardar mi información</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="/js/editUser.js"></script>
+
+<%- include("partials/footer") %>

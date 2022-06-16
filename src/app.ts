@@ -50,6 +50,16 @@ app.get('/', getUser, async (req: RequestWithAuth, res: Response) => {
     res.render("home", {user: req.user, categories, retas});
 });
 
+app.get('/user_profile', getUser, (req: RequestWithAuth, res: Response) => {
+    // here we should render the home view
+    res.render("user_profile", {user: req.user});
+});
+
+app.get('/edit_user_profile', getUser, (req: RequestWithAuth, res: Response) => {
+    // here we should render the home view
+    res.render("edit_user", {user: req.user});
+});
+
 app.get('/login', getUser, (req: RequestWithAuth, res: Response) => {
     if (req.user) {
         res.redirect("/");
