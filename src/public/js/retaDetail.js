@@ -18,6 +18,41 @@ async function deleteReta() {
     alert("Delete reta");
 }
 
+function assignImg(img){
+    document.getElementById('retaImg').src = img;
+}
+
+function setImg(){
+    const category = document.getElementById('data').value;
+    if (category === 'Futbol'){
+        assignImg('/images/futbol_cat.jpg');
+    }
+    else if (category === 'Golf'){
+        assignImg('/images/golf_cat.jpg');
+    }
+    else if (category === 'Voleibol'){
+        assignImg('/images/voley_cat.jpg');
+    }
+    else if (category === 'Baloncesto'){
+        assignImg('/images/basket_cat.jpg');
+    }
+    else if (category === 'Ajedrez'){
+        assignImg('/images/chess_cat.jpg');
+    }
+    else if (category === 'Raquetbol'){
+        assignImg('/images/raquet_cat.jpg');
+    }
+    else if (category === 'eSports'){
+        assignImg('/images/esport_cat.jpg');
+    }
+    else if (category === 'Otro'){
+        assignImg('/images/other_cat.jpg');
+    }
+    else{
+        assignImg('/images/other_cat.jpg');
+    }
+}
+
 function init() {
     const editRetaBtn = document.getElementById("edit-reta-button");
     const toLoginBtn = document.getElementById("to-login-btn");
@@ -31,6 +66,7 @@ function init() {
     } else {
         toggleAttendanceBtn.addEventListener('click', toggleAttendance);
     }
+    setImg();
 }
   
 document.addEventListener('DOMContentLoaded', init, false);

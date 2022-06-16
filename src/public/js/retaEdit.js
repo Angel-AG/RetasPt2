@@ -1,47 +1,54 @@
 var myArray = [];
 function readData(){
     var str = document.getElementById('data').value;
-    myArray = str.split(" ", 10);
-    getMonth(myArray[7]);
+    myArray = str.split(" ", 11);
+    getMonth(myArray[9]);
+    if(myArray[6] === '0'){
+        myArray[6] = '0.5';
+    }
+    if(Number(myArray[8]) < 10){
+        myArray[8] = '0' + myArray[8];
+    }
+    console.log(myArray);
 }
 
 function getMonth(month){
     switch (month) {
-        case "Jan":
-            myArray[7] = "01";
+        case "Ene":
+            myArray[9] = "01";
             break;
         case "Feb":
-            myArray[7] = "02";
+            myArray[9] = "02";
             break;
         case "Mar":
-            myArray[7] = "03";
+            myArray[9] = "03";
             break;
-        case "Apr":
-            myArray[7] = "04";
+        case "Abr":
+            myArray[9] = "04";
             break;
         case "May":
-            myArray[7] = "05";
+            myArray[9] = "05";
             break;
         case "Jun":
-            myArray[7] = "06";
+            myArray[9] = "06";
             break;
         case "Jul":
-            myArray[7] = "07";
+            myArray[9] = "07";
             break;
-        case "Aug":
-            myArray[7] = "08";
+        case "Ago":
+            myArray[9] = "08";
             break;
         case "Sep":
-            myArray[7] = "09";
+            myArray[9] = "09";
             break;
         case "Oct":
-            myArray[7] = "10";
+            myArray[9] = "10";
             break;
         case "Nov":
-            myArray[7] = "11";
+            myArray[9] = "11";
             break;
-        case "Dec":
-            myArray[7] = "12";
+        case "Dic":
+            myArray[9] = "12";
             break;
     }
 }
@@ -126,10 +133,11 @@ function initialize(){
     assign('categoriaRetaFeedback', s, '¡Categoría lista!');
     assign('minParticipantesRetaFeedback', s, '2 o más jugadores');
     assign('maxParticipantesRetaFeedback', s, 'Mayor o igual al mínimo');
-    document.getElementById('date').value = myArray[9] + "-" + myArray[7] + "-" + myArray[8];
+    document.getElementById('date').value = myArray[10] + "-" + myArray[9] + "-" + myArray[8];
     assign('fechaRetaFeedback', s, '¡Fecha lista!');
     document.getElementById('time').value = String(myArray[4]) + ":" + String(myArray[5]);
     assign('horaRetaFeedback', s, 'Hora lista!');
+    document.getElementById('duration').value = myArray[6];
     assign('duracionRetaFeedback', s, '0.5 o más horas');
     document.getElementById('is_private').value = myArray[1];
     assign('privacidadRetaFeedback', s, '¡Privacidad lista!');

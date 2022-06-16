@@ -15,7 +15,7 @@
                 <i class="fa fa-user-circle fa-4x" style="color: gray;"></i>
               </div>
               <div class="col-8">
-                  <h6 style="text-align:left; font-weight: 700; overflow-wrap: break-word;">Juan Jose Beltran</h6>
+                  <h6 style="text-align:left; font-weight: 700; overflow-wrap: break-word;"><%= user.name %></h6>
                   <p style="text-align: left; font-weight: 200; margin-top: -7.5px;">Administrador</p>
                   <button style="text-align: left; font-style: italic; font-weight: 200; background-color: transparent; border:0;"></button>
               </div>
@@ -98,7 +98,7 @@
             <div class="form-floating col-md-4 mb-3">
               <input 
                 type="number" class="form-control ps-3 rounded-pill border-dark border-2" id="duration" name="duration" step="0.5"
-                placeholder="Duración* (en horas)" value="<%= data.reta.duration %>" required/>
+                placeholder="Duración* (en horas)" required/>
               <label for="duration" class="form-label ps-4">
                 Duración<span class="req">*</span>
               </label>
@@ -125,11 +125,11 @@
             </div>
             <div class="w-100"></div>
             <div class="d-grid col-lg-4 mb-1">                
-                <button class="btn btn-primary rounded-pill fw-bold py-3" type="submit">Crear Reta</button>
+                <button class="btn btn-primary rounded-pill fw-bold py-3" type="submit">Guardar Reta</button>
             </div>
           </form>
           <div>
-            <input hidden id="data" value="<%= data.reta.category %> <%= data.reta.is_private %> <%= data.reta.id %> <%= user.id %> <%= data.reta.hours %> <%= data.reta.minutes %> <%= data.reta.date %>"></input>
+            <input hidden id="data" value="<%= data.reta.category %> <%= data.reta.is_private %> <%= data.reta.id %> <%= user.id %> <%= data.reta.hours %> <%= data.reta.minutes %> <%= data.reta.duration %> <%= data.date %> <%= data.year %>"></input>
           </div>
       </div>
     </div>

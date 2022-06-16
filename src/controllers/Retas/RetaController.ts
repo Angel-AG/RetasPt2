@@ -47,13 +47,15 @@ class RetaController {
             }
             // res.status(200).json({reta});
             reta = reta.get({plain: true});
+            const retaDate = new Date(reta.date);
             admin = admin?.get({plain: true});
             console.log(req.user)
             console.log(req.user?.id == admin?.id)
             console.log(confirmedParticipants)
             const data = {
                 reta, 
-                date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`,
+                date: `${getWeekday(retaDate)} ${retaDate.getUTCDate()} ${getMonth(retaDate)}`,
+                year: `${retaDate.getUTCFullYear()}`,
                 time: formatTime(reta.hours, reta.minutes),
                 admin,
                 isCurrentUserAdmin,
