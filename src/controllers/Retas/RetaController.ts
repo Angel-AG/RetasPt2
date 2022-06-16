@@ -82,7 +82,7 @@ class RetaController {
     public update() {
         return async (req: RequestWithAuth, res: Response) => {
             if (!req.user) return Promise.reject(new CustomError(403, "Permisos insuficientes"));
-            const updatedRetaReq : Reta = req.body.updatedRetaReq;
+            const updatedRetaReq : Reta = req.body;
             const retaId : number = req.body.retaId;
             const userId : number = req.user.id;
             const isUserAdmin = await Reta.findOne({where: {id: retaId, adminId: userId, is_active: true}});

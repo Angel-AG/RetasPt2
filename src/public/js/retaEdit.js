@@ -1,6 +1,138 @@
+var myArray = [];
+function readData(){
+    var str = document.getElementById('data').value;
+    myArray = str.split(" ", 10);
+    getMonth(myArray[7]);
+}
+
+function getMonth(month){
+    switch (month) {
+        case "Jan":
+            myArray[7] = "01";
+            break;
+        case "Feb":
+            myArray[7] = "02";
+            break;
+        case "Mar":
+            myArray[7] = "03";
+            break;
+        case "Apr":
+            myArray[7] = "04";
+            break;
+        case "May":
+            myArray[7] = "05";
+            break;
+        case "Jun":
+            myArray[7] = "06";
+            break;
+        case "Jul":
+            myArray[7] = "07";
+            break;
+        case "Aug":
+            myArray[7] = "08";
+            break;
+        case "Sep":
+            myArray[7] = "09";
+            break;
+        case "Oct":
+            myArray[7] = "10";
+            break;
+        case "Nov":
+            myArray[7] = "11";
+            break;
+        case "Dec":
+            myArray[7] = "12";
+            break;
+    }
+}
+
 function assign(pos, cl, msg) {
     document.getElementById(pos).className = cl;
     document.getElementById(pos).textContent = msg;
+}
+
+function assignImg(img){
+    document.getElementById('imgReta').src = img;
+}
+
+function categoryImg(e){
+    const category = e.target.value;
+    if (category === 'Futbol'){
+        assignImg('/images/futbol_cat.jpg');
+    }
+    else if (category === 'Golf'){
+        assignImg('/images/golf_cat.jpg');
+    }
+    else if (category === 'Voleibol'){
+        assignImg('/images/voley_cat.jpg');
+    }
+    else if (category === 'Baloncesto'){
+        assignImg('/images/basket_cat.jpg');
+    }
+    else if (category === 'Ajedrez'){
+        assignImg('/images/chess_cat.jpg');
+    }
+    else if (category === 'Raquetbol'){
+        assignImg('/images/raquet_cat.jpg');
+    }
+    else if (category === 'eSports'){
+        assignImg('/images/esport_cat.jpg');
+    }
+    else if (category === 'Otro'){
+        assignImg('/images/other_cat.jpg');
+    }
+    else{
+        assignImg('/images/other_cat.jpg');
+    }
+}
+
+function catImg(category){
+    if (category === 'Futbol'){
+        assignImg('/images/futbol_cat.jpg');
+    }
+    else if (category === 'Golf'){
+        assignImg('/images/golf_cat.jpg');
+    }
+    else if (category === 'Voleibol'){
+        assignImg('/images/voley_cat.jpg');
+    }
+    else if (category === 'Baloncesto'){
+        assignImg('/images/basket_cat.jpg');
+    }
+    else if (category === 'Ajedrez'){
+        assignImg('/images/chess_cat.jpg');
+    }
+    else if (category === 'Raquetbol'){
+        assignImg('/images/raquet_cat.jpg');
+    }
+    else if (category === 'eSports'){
+        assignImg('/images/esport_cat.jpg');
+    }
+    else if (category === 'Otro'){
+        assignImg('/images/other_cat.jpg');
+    }
+    else{
+        assignImg('/images/other_cat.jpg');
+    }
+}
+
+function initialize(){
+    const s = "px-3 pt-2 text-success";
+    const d = "px-3 pt-2 text-danger";
+    assign('nombreRetaFeedback', s, '¡Buen nombre!');
+    assign('lugarRetaFeedback', s, '¡Lugar listo!');
+    document.getElementById('category').value = myArray[0];
+    catImg(myArray[0]);
+    assign('categoriaRetaFeedback', s, '¡Categoría lista!');
+    assign('minParticipantesRetaFeedback', s, '2 o más jugadores');
+    assign('maxParticipantesRetaFeedback', s, 'Mayor o igual al mínimo');
+    document.getElementById('date').value = myArray[9] + "-" + myArray[7] + "-" + myArray[8];
+    assign('fechaRetaFeedback', s, '¡Fecha lista!');
+    document.getElementById('time').value = String(myArray[4]) + ":" + String(myArray[5]);
+    assign('horaRetaFeedback', s, 'Hora lista!');
+    assign('duracionRetaFeedback', s, '0.5 o más horas');
+    document.getElementById('is_private').value = myArray[1];
+    assign('privacidadRetaFeedback', s, '¡Privacidad lista!');
 }
 
 function onInputChange(e) {
@@ -28,20 +160,23 @@ function onInputChange(e) {
         if (e.target.value === '') {
             assign('categoriaRetaFeedback', d, 'Elige una categoría.');
         } else {
-            assign('categoriaRetaFeedback', s, 'Categoría lista!');
+            assign('categoriaRetaFeedback', s, '¡Categoría lista!');
         }
     }
 
     else if (nom === "min_participants") {
-        if (e.target.value === '') {
+        if (e.target.value === '' || Number(e.target.value) < 2) {
             assign('minParticipantesRetaFeedback', d, '2 o más jugadores');
+        } else if(Number(e.target.value) > Number(document.getElementById("max_participants").value)) {
+            assign('maxParticipantesRetaFeedback', d, 'Mayor o igual al mínimo');
         } else {
             assign('minParticipantesRetaFeedback', s, '2 o más jugadores');
+            assign('maxParticipantesRetaFeedback', s, 'Mayor o igual al mínimo');
         }
     }
 
     else if (nom === "max_participants") {
-        if (e.target.value === '') {
+        if (e.target.value === '' || Number(e.target.value) < Number(document.getElementById("min_participants").value)) {
             assign('maxParticipantesRetaFeedback', d, 'Mayor o igual al mínimo');
         } else {
             assign('maxParticipantesRetaFeedback', s, 'Mayor o igual al mínimo');
@@ -49,8 +184,13 @@ function onInputChange(e) {
     }
 
     else if (nom === "date") {
-        if (e.target.value === '') {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const inputDate = new Date(e.target.value.replace(/-/g, '/'));
+        if (inputDate === '') {
             assign('fechaRetaFeedback', d, 'Elige una fecha.');
+        } else if(inputDate < today) {
+            assign('fechaRetaFeedback', d, 'La fecha ya ha pasado.');
         } else {
             assign('fechaRetaFeedback', s, '¡Fecha lista!');
         }
@@ -65,7 +205,7 @@ function onInputChange(e) {
     }
 
     else if (nom === "duration") {
-        if (e.target.value === '') {
+        if (e.target.value === '' || Number(e.target.value) < 0.5) {
             assign('duracionRetaFeedback', d, '0.5 o más horas');
         } else {
             assign('duracionRetaFeedback', s, '0.5 o más horas');
@@ -109,16 +249,31 @@ async function retaSubmit(e) {
     if (!min_participants) {
         errorFound = true;
     }
+    if (Number(min_participants) < 2) {
+        errorFound = true;
+    }
     if (!max_participants) {
         errorFound = true;
     }
+    if (Number(max_participants) < Number(min_participants)) {
+        errorFound = true;
+    }
     if (!date) {
+        errorFound = true;
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const inputDate = new Date(date.replace(/-/g, '/'));
+    if (inputDate < today) {
         errorFound = true;
     }
     if (!time) {
         errorFound = true;
     }
     if (!duration) {
+        errorFound = true;
+    }
+    if (Number(duration) < 0.5) {
         errorFound = true;
     }
     if (!is_private) {
@@ -128,8 +283,8 @@ async function retaSubmit(e) {
       return;
     }
 
-var nuevaReta = new FormData();
-nuevaReta = {
+var updateReta = new FormData();
+updateReta = {
     name: inputs.name,
     description: "Soy una reta",
     location: inputs.location,
@@ -142,14 +297,16 @@ nuevaReta = {
     duration: Number(inputs.duration),
     is_private: inputs.is_private === "true",
     confirmed_users: null,
-    admin: null,
-    is_active: true
+    admin: myArray[3],
+    is_active: true,
+    retaId: myArray[2]
 };
 
     try {
-      const response = await axios.post('/retas/', nuevaReta);
-      numReta = response.data.newReta.id;
-      window.location.assign('/retas/' + numReta);
+      const response = await axios.put('/retas/', updateReta);
+      numReta = response.data;
+      console.log(numReta);
+      window.location.assign('/retas/' + myArray[2]);
       // other sucess mesage
     } catch (error) {
         console.error(error);
@@ -159,15 +316,18 @@ nuevaReta = {
 
 function init() {
     document.getElementById('retaForm').addEventListener('submit', retaSubmit);
-    document.getElementById('name').addEventListener('change', onInputChange);
-    document.getElementById('location').addEventListener('change', onInputChange);
-    document.getElementById('category').addEventListener('change', onInputChange);
-    document.getElementById('is_private').addEventListener('change', onInputChange);
-    document.getElementById('date').addEventListener('change', onInputChange);
-    document.getElementById('time').addEventListener('change', onInputChange);
-    document.getElementById('duration').addEventListener('change', onInputChange);
-    document.getElementById('min_participants').addEventListener('change', onInputChange);
-    document.getElementById('max_participants').addEventListener('change', onInputChange);
+    document.getElementById('name').addEventListener('input', onInputChange);
+    document.getElementById('location').addEventListener('input', onInputChange);
+    document.getElementById('category').addEventListener('input', onInputChange);
+    document.getElementById('category').addEventListener('change', categoryImg);
+    document.getElementById('is_private').addEventListener('input', onInputChange);
+    document.getElementById('date').addEventListener('input', onInputChange);
+    document.getElementById('time').addEventListener('input', onInputChange);
+    document.getElementById('duration').addEventListener('input', onInputChange);
+    document.getElementById('min_participants').addEventListener('input', onInputChange);
+    document.getElementById('max_participants').addEventListener('input', onInputChange);
+    readData();
+    initialize();
 }
-
+  
 document.addEventListener('DOMContentLoaded', init, false);

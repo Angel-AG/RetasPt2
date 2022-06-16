@@ -9,7 +9,6 @@ function assignImg(img){
 
 function categoryImg(e){
     const category = e.target.value;
-    console.log(category);
     if (category === 'Futbol'){
         assignImg('/images/futbol_cat.jpg');
     }
@@ -176,13 +175,13 @@ async function retaSubmit(e) {
     if (!min_participants) {
         errorFound = true;
     }
-    if (min_participants < 2) {
+    if (Number(min_participants) < 2) {
         errorFound = true;
     }
     if (!max_participants) {
         errorFound = true;
     }
-    if (max_participants < min_participants) {
+    if (Number(max_participants) < Number(min_participants)) {
         errorFound = true;
     }
     if (!date) {
@@ -200,7 +199,7 @@ async function retaSubmit(e) {
     if (!duration) {
         errorFound = true;
     }
-    if (duration < 0.5) {
+    if (Number(duration) < 0.5) {
         errorFound = true;
     }
     if (!is_private) {
