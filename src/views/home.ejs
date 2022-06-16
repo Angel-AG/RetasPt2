@@ -49,10 +49,9 @@
         <h2>Todas las retas</h2>
       </div>
       <div class="card-group py-lg-5">
-            <div class="row pt-3">
+            <div class="row row-col-3 me-md-2 pt-3">
                 <% retas.forEach(function(reta) { %>
-                <div class="col-12 col-md-4 me-md-2 pt-4">
-                    <div class="card text-white mb-4">
+                    <div class="card text-white mb-4 col-4">
                         <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
                         <div class="card-img-overlay d-flex flex-column align-items-start">
                             <h5 class="card-title bg-dark rounded-pill py-2 px-4"><a href="/retas/<%= reta.id %>"> <%= reta.title %> </a></h5>
@@ -73,7 +72,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 <% }) %>
             </div>
        </div>

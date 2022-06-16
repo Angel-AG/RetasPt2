@@ -1,8 +1,8 @@
-<%- include("partials/header", {user: user}) %>
+<%- include("partials/header") %>
 
 <div class="container-fluid full-page-with-nav">
     <div class="row h-100">
-        <div class="d-none d-md-block col-12 col-lg-3">          
+        <div class="d-none d-md-block col-12 col-lg-2">          
             <div class="container-fluid h-100 bg-secondary">
                 <div class="row pt-5">
                     <h3 class="text-dark fw-bold start-50">Mi perfil</h3>
@@ -22,107 +22,83 @@
                 <div class="row pt-4">
                     <div class="accordion accordion-flush" id="#accordionFlush">
                         <a href="/edit_user_profile" class="btn btn-dark btn-sm rounded-pill fw-bold ms-lg-2">Editar mi información</a>
+                        <button id="logout-button" class="btn btn-dark btn-sm rounded-pill fw-bold ms-lg-2 mt-5 px-5">Cerrar sesión</button>
                         <!-- {children} -->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-9">
+        <div class="col-5 col-lg-5">
             <div class="row pt-5">
                 <div style="border-bottom: 0.1rem solid" class="d-flex justify-content-between">
-                    <h2>Retas confirmadas</h2>
+                    <h2>Tus retas como administrador</h2>
                 </div>
             </div>
             <div class="card-group py-lg-5 row pt-5">
-                <div class="row row-col-3 me-md-2 pt-3">
-                    <div class="card text-white mb-4 col-4">
-                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
-                        <div class="card-img-overlay d-flex flex-column align-items-start">
-                            <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
-                        </div>
-                        <div class="card-footer bg-light text-dark">
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <p>gameloc</p>
-                                </div>
+                <div class="row row-col-12 me-md-2 pt-3">
+                    <% retasAsAdmin.forEach(function(reta) { %>
+                        <div class="card text-white mb-4 col-12">
+                            <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                            <div class="card-img-overlay d-flex flex-column align-items-start">
+                                <h5 class="card-title bg-dark rounded-pill py-2 px-4"><a href="/retas/<%= reta.id %>"> <%= reta.title %> </a></h5>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p>gametime</p>
+                            <div class="card-footer bg-light text-dark">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <p> <%= reta.location %> </p>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <p>gamedate</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card text-white mb-4 col-4">
-                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
-                        <div class="card-img-overlay d-flex flex-column align-items-start">
-                            <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
-                        </div>
-                        <div class="card-footer bg-light text-dark">
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <p>gameloc</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p>gametime</p>
-                                </div>
-                                <div class="col">
-                                    <p>gamedate</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <p> <%= reta.time %> </p>
+                                    </div>
+                                    <div class="col">
+                                        <p> <%= reta.date%></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card text-white mb-4 col-4">
-                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
-                        <div class="card-img-overlay d-flex flex-column align-items-start">
-                            <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
-                        </div>
-                        <div class="card-footer bg-light text-dark">
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <p>gameloc</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p>gametime</p>
-                                </div>
-                                <div class="col">
-                                    <p>gamedate</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card text-white mb-4 col-4">
-                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36.2vh; object-fit: cover; overflow: auto; "/>
-                        <div class="card-img-overlay d-flex flex-column align-items-start">
-                            <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
-                        </div>
-                        <div class="card-footer bg-light text-dark">
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <p>gameloc</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p>gametime</p>
-                                </div>
-                                <div class="col">
-                                    <p>gamedate</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <% }) %>
                 </div>
-           </div>
+            </div>
+        </div>
+        <div class="col-5 col-lg-5">
+            <div class="row pt-5">
+                <div style="border-bottom: 0.1rem solid" class="d-flex justify-content-between">
+                    <h2>Tus retas como participante</h2>
+                </div>
+            </div>
+            <div class="card-group py-lg-5 row pt-5">
+                <div class="row row-col-12 me-md-2 pt-3">
+                    <% retasAsParticipant.forEach(function(reta) { %>
+                        <div class="card text-white mb-4 col-12">
+                            <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                            <div class="card-img-overlay d-flex flex-column align-items-start">
+                                <h5 class="card-title bg-dark rounded-pill py-2 px-4"><a href="/retas/<%= reta.id %>"> <%= reta.title %> </a></h5>
+                            </div>
+                            <div class="card-footer bg-light text-dark">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <p> <%= reta.location %> </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p> <%= reta.time %> </p>
+                                    </div>
+                                    <div class="col">
+                                        <p> <%= reta.date%></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script src="js/userProfile.js"></script>
     
 <%- include("partials/footer") %>

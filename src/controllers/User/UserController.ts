@@ -45,6 +45,19 @@ class UserController {
         }
     }
 
+    public logout() {
+        return async (req: RequestWithAuth, res: Response) => {
+            const user = await User.findByPk(req.user?.id);
+            user?.update({token: null})
+            res.cookie('authcookie', null);
+            res.status(201).json({
+                success: true,
+                message: 'Logout successful',
+                user,
+            });
+        }
+    }
+
     public update() {
         return async (req: RequestWithAuth, res: Response) => {
             if (!req.user) return Promise.reject(new CustomError(403, "Permisos insuficientes"));
@@ -103,45 +116,36 @@ class UserController {
         }
     }
 
-    public getAllRetasForUserAsAdmin() {
-        return async (req: RequestWithAuth, res: Response) => {
-            if (!req.user) return Promise.reject(new CustomError(403, "Permisos insuficientes"));
-            const userId : number = req.user.id;
-            const retasAsAdmin = await Reta.findAll({
-                where: {
-                    is_active: true, 
-                    adminId: userId
-                }, 
-                order: [['date', 'ASC']], 
-                include: [User]
-            });
-            if (!retasAsAdmin) return Promise.reject(new CustomError(404, "No hay retas para este usuario"))
-            res.status(201).json(retasAsAdmin);
-        }
+    public async getAllRetasForUserAsAdmin(userId: number) {
+        return await Reta.findAll({
+            where: {
+                is_active: true, 
+                adminId: userId
+            }, 
+            order: [['date', 'ASC']], 
+            include: [User],
+        });
     }
 
-    public getAllRetasForUserAsParticipant() {
-        return async (req: RequestWithAuth, res: Response) => {
-            if (!req.user) return Promise.reject(new CustomError(403, "Permisos insuficientes"));
-            const userId : number = req.user.id;
-            const retaConfirmationsForUser= await ConfirmedRetas.findAll({where: {userId}})
-            const retasAsParticipantQueries = retaConfirmationsForUser.map(async (confirmation) => 
-                await Reta.findOne({
-                    where: {
-                        id: confirmation.retaId,
-                        adminId: {
-                            [Op.ne]: confirmation.userId
-                        },
-                        is_active: true
+    public async getAllRetasForUserAsParticipant(userId: number) {
+        const retaConfirmationsForUser= await ConfirmedRetas.findAll({where: {userId}})
+        const retasAsParticipantQueries = retaConfirmationsForUser.map(async (confirmation) => 
+            await Reta.findOne({
+                where: {
+                    id: confirmation.retaId,
+                    adminId: {
+                        [Op.ne]: confirmation.userId
                     },
-                    order: [['date', 'ASC']],
-                    include: [User]
-                }));
-            // check if removing null results is necessary
-            const retasAsParticipant = await Promise.all(retasAsParticipantQueries)
-            if (!retasAsParticipant) return Promise.reject(new CustomError(404, "No hay retas para este usuario"))
-            res.status(201).json(retasAsParticipant);
-        }
+                    is_active: true
+                },
+                order: [['date', 'ASC']],
+                include: [User]
+            }));
+        // check if removing null results is necessary
+        const retasAsParticipant = await Promise.all(retasAsParticipantQueries)
+        if (!retasAsParticipant) return Promise.reject(new CustomError(404, "No hay retas para este usuario"))
+        return retasAsParticipant.filter(reta => reta !== null)
+
     }
 
     public isUserInReta() {
