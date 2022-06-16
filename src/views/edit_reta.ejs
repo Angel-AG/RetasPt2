@@ -30,7 +30,7 @@
       </div>
       <div class="col-12 col-lg-9">
           <div class="row" style="position: relative;">
-            <img class="img-new-reta img-fluid rounded mt-4" src="/images/basket_retas.jpg" alt="reta img">
+            <img class="img-new-reta img-fluid rounded mt-4" id="imgReta" src="/images/other_cat.jpg" alt="reta img">
           </div>
           <form id="retaForm" class="row mt-3 mb-5">
             <h3 class="text-dark fw-bold style-h6">Prepara tu reta</h3>
@@ -38,7 +38,7 @@
             <div class="form-floating mb-3">
                 <input 
                   type="text" class="form-control ps-3 rounded-pill border-dark border-2" id="name" name="name"
-                  placeholder="Nombre de la reta*" value=<%= data.reta.name %> required/>
+                  placeholder="Nombre de la reta*" value="<%= data.reta.name %>" required/>
                 <label for="name" class="form-label ps-4 mb-5">
                     Nombre de la reta<span class="req">*</span>
                 </label>
@@ -48,7 +48,7 @@
             <div class="form-floating col-12 mb-3">
               <input 
                 type="text" class="form-control ps-3 rounded-pill border-dark border-2" id="location" name="location"
-                placeholder="Ubicación*" value=<%= data.reta.location %> required/>
+                placeholder="Ubicación*" value="<%= data.reta.location %>" required/>
               <label for="location" class="form-label ps-4">
                 Ubicación<span class="req">*</span>
               </label>
@@ -98,7 +98,7 @@
             <div class="form-floating col-md-4 mb-3">
               <input 
                 type="number" class="form-control ps-3 rounded-pill border-dark border-2" id="duration" name="duration" step="0.5"
-                placeholder="Duración* (en horas)" value="0.5" required/>
+                placeholder="Duración* (en horas)" value="<%= data.reta.duration %>" required/>
               <label for="duration" class="form-label ps-4">
                 Duración<span class="req">*</span>
               </label>
@@ -108,7 +108,7 @@
             <div class="form-floating col-md-6 col-lg-4 mb-3">
               <input 
                 type="number" class="form-control ps-3 rounded-pill border-dark border-2" id="min_participants" name="min_participants"
-                placeholder="Mínimo de jugadores*" value="2" required/>
+                placeholder="Mínimo de jugadores*" value="<%= data.reta.min_participants %>" required/>
               <label for="min_participants" class="form-label ps-4">
                 Mínimo de jugadores<span class="req">*</span>
               </label>
@@ -117,7 +117,7 @@
             <div class="form-floating col-md-6 col-lg-4 mb-3">
               <input 
                 type="number" class="form-control ps-3 rounded-pill border-dark border-2" id="max_participants" name="max_participants"
-                placeholder="Máximo de jugadores*" value="2" required/>
+                placeholder="Máximo de jugadores*" value="<%= data.reta.max_participants %>" required/>
               <label for="max_participants" class="form-label ps-4">
                 Máximo de jugadores<span class="req">*</span>
               </label>
@@ -128,6 +128,9 @@
                 <button class="btn btn-primary rounded-pill fw-bold py-3" type="submit">Crear Reta</button>
             </div>
           </form>
+          <div>
+            <input hidden id="data" value="<%= data.reta.category %> <%= data.reta.is_private %> <%= data.reta.id %> <%= user.id %> <%= data.reta.hours %> <%= data.reta.minutes %> <%= data.reta.date %>"></input>
+          </div>
       </div>
     </div>
   </div>
