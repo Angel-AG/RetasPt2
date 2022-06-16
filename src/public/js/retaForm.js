@@ -3,6 +3,65 @@ function assign(pos, cl, msg) {
     document.getElementById(pos).textContent = msg;
 }
 
+function assignImg(img){
+    document.getElementById('imgReta').src = img;
+}
+
+function categoryImg(e){
+    const category = e.target.value;
+    console.log(category);
+    if (category === 'Futbol'){
+        assignImg('/images/futbol_cat.jpg');
+    }
+    else if (category === 'Golf'){
+        assignImg('/images/golf_cat.jpg');
+    }
+    else if (category === 'Voleibol'){
+        assignImg('/images/voley_cat.jpg');
+    }
+    else if (category === 'Baloncesto'){
+        assignImg('/images/basket_cat.jpg');
+    }
+    else if (category === 'Ajedrez'){
+        assignImg('/images/chess_cat.jpg');
+    }
+    else if (category === 'Raquetbol'){
+        assignImg('/images/raquet_cat.jpg');
+    }
+    else if (category === 'eSports'){
+        assignImg('/images/esport_cat.jpg');
+    }
+    else if (category === 'Otro'){
+        assignImg('/images/other_cat.jpg');
+    }
+    else{
+        assignImg('/images/other_cat.jpg');
+    }
+}
+
+function initialize(){
+    const s = "px-3 pt-2 text-success";
+    const d = "px-3 pt-2 text-danger";
+    document.getElementById('name').value = '';
+    assign('nombreRetaFeedback', d, 'Sin nombre, escribe uno para tu reta.');
+    document.getElementById('location').value = '';
+    assign('lugarRetaFeedback', d, 'Sin ubicación, escribe una para tu reta.');
+    document.getElementById('category').value = '';
+    assign('categoriaRetaFeedback', d, 'Elige una categoría.');
+    document.getElementById('min_participants').value = 2;
+    assign('minParticipantesRetaFeedback', s, '2 o más jugadores');
+    document.getElementById('max_participants').value = 2;
+    assign('maxParticipantesRetaFeedback', s, 'Mayor o igual al mínimo');
+    document.getElementById('date').value = '';
+    assign('fechaRetaFeedback', d, 'Elige una fecha.');
+    document.getElementById('time').value = '';
+    assign('horaRetaFeedback', d, 'Elige una hora.');
+    document.getElementById('duration').value = 0.5;
+    assign('duracionRetaFeedback', s, '0.5 o más horas');
+    document.getElementById('is_private').value = '';
+    assign('privacidadRetaFeedback', d, 'Elige la privacidad.');
+}
+
 function onInputChange(e) {
     var nom = e.target.name;
     const s = "px-3 pt-2 text-success";
@@ -28,20 +87,23 @@ function onInputChange(e) {
         if (e.target.value === '') {
             assign('categoriaRetaFeedback', d, 'Elige una categoría.');
         } else {
-            assign('categoriaRetaFeedback', s, 'Categoría lista!');
+            assign('categoriaRetaFeedback', s, '¡Categoría lista!');
         }
     }
 
     else if (nom === "min_participants") {
-        if (e.target.value === '') {
+        if (e.target.value === '' || Number(e.target.value) < 2) {
             assign('minParticipantesRetaFeedback', d, '2 o más jugadores');
+        } else if(Number(e.target.value) > Number(document.getElementById("max_participants").value)) {
+            assign('maxParticipantesRetaFeedback', d, 'Mayor o igual al mínimo');
         } else {
             assign('minParticipantesRetaFeedback', s, '2 o más jugadores');
+            assign('maxParticipantesRetaFeedback', s, 'Mayor o igual al mínimo');
         }
     }
 
     else if (nom === "max_participants") {
-        if (e.target.value === '') {
+        if (e.target.value === '' || Number(e.target.value) < Number(document.getElementById("min_participants").value)) {
             assign('maxParticipantesRetaFeedback', d, 'Mayor o igual al mínimo');
         } else {
             assign('maxParticipantesRetaFeedback', s, 'Mayor o igual al mínimo');
@@ -49,8 +111,13 @@ function onInputChange(e) {
     }
 
     else if (nom === "date") {
-        if (e.target.value === '') {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const inputDate = new Date(e.target.value.replace(/-/g, '/'));
+        if (inputDate === '') {
             assign('fechaRetaFeedback', d, 'Elige una fecha.');
+        } else if(inputDate < today) {
+            assign('fechaRetaFeedback', d, 'La fecha ya ha pasado.');
         } else {
             assign('fechaRetaFeedback', s, '¡Fecha lista!');
         }
@@ -65,7 +132,7 @@ function onInputChange(e) {
     }
 
     else if (nom === "duration") {
-        if (e.target.value === '') {
+        if (e.target.value === '' || Number(e.target.value) < 0.5) {
             assign('duracionRetaFeedback', d, '0.5 o más horas');
         } else {
             assign('duracionRetaFeedback', s, '0.5 o más horas');
@@ -109,16 +176,31 @@ async function retaSubmit(e) {
     if (!min_participants) {
         errorFound = true;
     }
+    if (min_participants < 2) {
+        errorFound = true;
+    }
     if (!max_participants) {
         errorFound = true;
     }
+    if (max_participants < min_participants) {
+        errorFound = true;
+    }
     if (!date) {
+        errorFound = true;
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const inputDate = new Date(date.replace(/-/g, '/'));
+    if (inputDate < today) {
         errorFound = true;
     }
     if (!time) {
         errorFound = true;
     }
     if (!duration) {
+        errorFound = true;
+    }
+    if (duration < 0.5) {
         errorFound = true;
     }
     if (!is_private) {
@@ -159,15 +241,17 @@ nuevaReta = {
 
 function init() {
     document.getElementById('retaForm').addEventListener('submit', retaSubmit);
-    document.getElementById('name').addEventListener('change', onInputChange);
-    document.getElementById('location').addEventListener('change', onInputChange);
-    document.getElementById('category').addEventListener('change', onInputChange);
-    document.getElementById('is_private').addEventListener('change', onInputChange);
-    document.getElementById('date').addEventListener('change', onInputChange);
-    document.getElementById('time').addEventListener('change', onInputChange);
-    document.getElementById('duration').addEventListener('change', onInputChange);
-    document.getElementById('min_participants').addEventListener('change', onInputChange);
-    document.getElementById('max_participants').addEventListener('change', onInputChange);
+    document.getElementById('name').addEventListener('input', onInputChange);
+    document.getElementById('location').addEventListener('input', onInputChange);
+    document.getElementById('category').addEventListener('input', onInputChange);
+    document.getElementById('category').addEventListener('change', categoryImg);
+    document.getElementById('is_private').addEventListener('input', onInputChange);
+    document.getElementById('date').addEventListener('input', onInputChange);
+    document.getElementById('time').addEventListener('input', onInputChange);
+    document.getElementById('duration').addEventListener('input', onInputChange);
+    document.getElementById('min_participants').addEventListener('input', onInputChange);
+    document.getElementById('max_participants').addEventListener('input', onInputChange);
+    initialize();
 }
   
 document.addEventListener('DOMContentLoaded', init, false);
