@@ -1,0 +1,128 @@
+<%- include("partials/header", {user: user}) %>
+
+<div class="container-fluid full-page-with-nav">
+    <div class="row h-100">
+        <div class="d-none d-md-block col-12 col-lg-3">          
+            <div class="container-fluid h-100 bg-secondary">
+                <div class="row pt-5">
+                    <h3 class="text-dark fw-bold start-50">Mi perfil</h3>
+                </div>
+                <div class="row pt-4">
+                    <div class="col-4">
+                    <!-- <img class="img-fluid align-content-right rounded-circle " alt="User profile" src={imgSrc} style={{objectFit: "cover"}}/> -->
+                    <!-- <FontAwesomeIcon color="gray" icon="faUserCircle" size="4x"/> -->
+                    <i class="fa fa-user-circle fa-4x" style="color: gray;"></i>
+                    </div>
+                    <div class="col-8">
+                        <h6 style="text-align:left; font-weight: 700; overflow-wrap: break-word;">Juan Jose Beltran</h6>
+                        <p style="text-align: left; font-weight: 200; margin-top: -7.5px;">Administrador</p>
+                        <button style="text-align: left; font-style: italic; font-weight: 200; background-color: transparent; border:0;"></button>
+                    </div>
+                </div>
+                <div class="row pt-4">
+                    <div class="accordion accordion-flush" id="#accordionFlush">
+                        <a href="/edit_user_profile" class="btn btn-dark btn-sm rounded-pill fw-bold ms-lg-2">Editar mi información</a>
+                        <!-- {children} -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-9">
+            <div class="row pt-5">
+                <div style="border-bottom: 0.1rem solid" class="d-flex justify-content-between">
+                    <h2>Retas confirmadas</h2>
+                </div>
+            </div>
+            <div class="card-group py-lg-5 row pt-5">
+                <div class="row row-col-3 me-md-2 pt-3">
+                    <div class="card text-white mb-4 col-4">
+                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                        <div class="card-img-overlay d-flex flex-column align-items-start">
+                            <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
+                        </div>
+                        <div class="card-footer bg-light text-dark">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p>gameloc</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p>gametime</p>
+                                </div>
+                                <div class="col">
+                                    <p>gamedate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card text-white mb-4 col-4">
+                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                        <div class="card-img-overlay d-flex flex-column align-items-start">
+                            <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
+                        </div>
+                        <div class="card-footer bg-light text-dark">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p>gameloc</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p>gametime</p>
+                                </div>
+                                <div class="col">
+                                    <p>gamedate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card text-white mb-4 col-4">
+                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                        <div class="card-img-overlay d-flex flex-column align-items-start">
+                            <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
+                        </div>
+                        <div class="card-footer bg-light text-dark">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p>gameloc</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p>gametime</p>
+                                </div>
+                                <div class="col">
+                                    <p>gamedate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card text-white mb-4 col-4">
+                        <img src="/images/portero_retas.jpg" class="card-img" alt="" style= "height: 36.2vh; object-fit: cover; overflow: auto; "/>
+                        <div class="card-img-overlay d-flex flex-column align-items-start">
+                            <h5 class="card-title bg-dark rounded-pill py-2 px-4">Title</h5>
+                        </div>
+                        <div class="card-footer bg-light text-dark">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p>gameloc</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p>gametime</p>
+                                </div>
+                                <div class="col">
+                                    <p>gamedate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
+</div>
+    
+<%- include("partials/footer") %>
