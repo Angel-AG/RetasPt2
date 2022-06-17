@@ -8,7 +8,7 @@ const router = express.Router({mergeParams: true});
 router.post('/', asyncHandler(isLoggedIn), asyncHandler(RetaController.create()))
 router.delete('/', asyncHandler(isLoggedIn), asyncHandler(RetaController.delete()));
 router.put('/', asyncHandler(isLoggedIn), asyncHandler(RetaController.update()));
-router.get('/get_all_by_category/:category', asyncHandler(RetaController.getRetasByCategory()));
+router.get('/get_all_by_category/:category', getUser, asyncHandler(RetaController.getRetasByCategory()));
 router.get('/get_by_query', asyncHandler(RetaController.getRetasBySearchBarQuery()))
 router.get('/:retaId', getUser, asyncHandler(RetaController.readOne(false)));
 router.get('/edit_reta/:retaId', asyncHandler(isLoggedIn), asyncHandler(RetaController.readOne(true)));

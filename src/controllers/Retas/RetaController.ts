@@ -99,11 +99,36 @@ class RetaController {
     }
 
     public getRetasByCategory() {
-        return async (req: Request, res: Response) => {
+        return async (req: RequestWithAuth, res: Response) => {
+            const categories = [
+                { name: 'Todas', imgSrc: '/images/portero_retas.jpg' },
+                { name: 'Futbol', imgSrc: '/images/futbol_cat.jpg' },
+                { name: 'Baloncesto', imgSrc: '/images/basket_cat.jpg' },
+                { name: 'Voleibol', imgSrc: '/images/voley_cat.jpg' },
+                { name: 'Golf', imgSrc: '/images/golf_cat.jpg' },
+                { name: 'Raquetbol', imgSrc: '/images/raquet_cat.jpg' },
+                { name: 'eSports', imgSrc: '/images/esport_cat.jpg' },
+                { name: 'Ajedrez', imgSrc: '/images/chess_cat.jpg' },
+                { name: 'Otras', imgSrc: '/images/other_cat.jpg' }
+            ];
             const category : string = req.params.category;
+            if (category === 'Todas') {
+                res.redirect('/');
+                return;
+            }
             const retasWithCategory = await Reta.findAll({where: {category, is_active: true, is_private: false}, order: [['date', 'ASC']], include: [User]});
             if (!retasWithCategory) return Promise.reject(new CustomError(404, '¡No hay retas con esta categoría!'));
-            res.status(200).json(retasWithCategory);
+            const retas = retasWithCategory.map(reta => {
+                return {
+                    id: reta.id,
+                    title: reta.name, 
+                    location: reta.location,
+                    category: reta.category,
+                    time: formatTime(reta.hours, reta.minutes),
+                    date: `${getWeekday(reta.date)} ${reta.date.getDate()} ${getMonth(reta.date)}`
+                }
+            })
+            res.render("home", {user: req.user, categories, retas});
         }
     }
 
