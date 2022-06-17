@@ -51,33 +51,35 @@
       <div class='row mt-2 px-3 px-lg-5 pt-2'>
         <h2>Todas las retas</h2>
       </div>
-      <div class="card-group py-lg-5">
+      <div class="row mt-2 px-3 px-lg-5 pt-2">
                 <% retas.forEach(function(reta) { %>
-                    <div class="card text-white mb-4 col-4">
-                        <% for (var i = 0; i < categories.length; i++)  {   %>
-                            <% if (reta.category == categories[i].name) {%>
-                                <img id="retaImg" src="<%= categories[i].imgSrc %>" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                    <div class="col-md-4 col-12">
+                        <div class="card text-white">
+                            <% for (var i = 0; i < categories.length; i++)  {   %>
+                                <% if (reta.category == categories[i].name) {%>
+                                    <img id="retaImg" src="<%= categories[i].imgSrc %>" class="card-img" alt="" style= "height: 36vh; object-fit: cover; overflow: auto; "/>
+                                <%  } %>
                             <%  } %>
-                        <%  } %>
-                        <div class="card-img-overlay d-flex flex-column align-items-start">
-                            <h5 class="card-title bg-dark rounded-pill py-2 px-4"><a href="/retas/<%= reta.id %>"> <%= reta.title %> </a></h5>
-                        </div>
-                        <div class="card-footer bg-light text-dark">
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <i class="fa fa-location-dot"></i>
-                                    <%= reta.location %>
-                                </div>
+                            <div class="card-img-overlay d-flex flex-column align-items-start">
+                                <h5 class="card-title bg-dark rounded-pill py-2 px-4"><a href="/retas/<%= reta.id %>"> <%= reta.title %> </a></h5>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <FontAwesomeIcon icon="faClock" />
-                                    <i class="fa fa-clock"></i>
-                                    <%= reta.time %>
+                            <div class="card-footer bg-light text-dark">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <i class="fa fa-location-dot"></i>
+                                        <%= reta.location %>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <i class="fa fa-calendar"></i>
-                                    <%= reta.date%>
+                                <div class="row">
+                                    <div class="col">
+                                        <FontAwesomeIcon icon="faClock" />
+                                        <i class="fa fa-clock"></i>
+                                        <%= reta.time %>
+                                    </div>
+                                    <div class="col">
+                                        <i class="fa fa-calendar"></i>
+                                        <%= reta.date%>
+                                    </div>
                                 </div>
                             </div>
                         </div>
